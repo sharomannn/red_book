@@ -141,3 +141,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'core.User'
 
 from project.settings.rest_framework import *  # noqa
+from project.settings.other import *  # noqa
