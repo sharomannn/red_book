@@ -46,7 +46,7 @@ class User(ModelViewSet):
 
 
 class RedBookEntry(ModelViewSet):
-    queryset = models.RedBookEntry
+    queryset = models.RedBookEntry.objects.all()
     serializer_class = serializers.RedBookEntry
     permission_classes = [permissions.IsAdminOrReadOnly]
 

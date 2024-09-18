@@ -75,7 +75,7 @@ class Section(models.Model):
 class RedBookEntry(models.Model):
     name = models.CharField('название', max_length=200)
     latin_name = models.CharField('латинское название', max_length=200, blank=True, null=True)
-    section = models.ForeignKey(Section, on_delete=models.CASCADE, null=True, blank=True, related_name='entries')
+    section = models.ForeignKey(Section, verbose_name='раздел', on_delete=models.CASCADE, null=True, blank=True, related_name='entries')
     category = models.CharField('категория', max_length=1, choices=consts.CATEGORY.CHOICES, blank=True, null=True)
     order = models.ForeignKey(
         Order, on_delete=models.CASCADE, related_name='entries', verbose_name='отряд', blank=True, null=True

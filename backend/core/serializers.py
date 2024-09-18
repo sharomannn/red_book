@@ -52,13 +52,31 @@ class Sector(serializers.ModelSerializer):
 
 
 class RedBookEntry(serializers.ModelSerializer):
-    order = Order()
-    family = Family()
-    sectors = Sector(many=True)
+    order = Order(read_only=True)
+    family = Family(read_only=True)
+    sectors = Sector(many=True, read_only=True)
+
+    order_id = serializers.IntegerField(required=False, allow_null=True)
+    family_id = serializers.IntegerField(required=False, allow_null=True)
+    sector_ids = serializers.ListField(child=serializers.IntegerField(), write_only=True, required=False)
 
     class Meta:
         model = models.RedBookEntry
         fields = '__all__'
+
+    def create(self, validated_data: dict) -> models.RedBookEntry:
+        sectors_id = validated_data.pop('incident_kind_ids', [])
+        red_book_entry = super().create(validated_data)
+        if sectors_id:
+            red_book_entry.sectors.set(sectors_id)
+        return red_book_entry
+
+    def update(self, instance: models.RedBookEntry, validated_data: dict) -> models.RedBookEntry:
+        sectors_id = validated_data.pop('sectors_id', [])
+        instance = super().update(instance, validated_data)
+        if sectors_id:
+            instance.sectors.set(sectors_id)
+        return instance
 
 
 class Observation(serializers.ModelSerializer):
