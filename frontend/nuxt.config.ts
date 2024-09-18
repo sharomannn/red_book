@@ -1,9 +1,11 @@
 import { createResolver } from "@nuxt/kit";
+
 const { resolve } = createResolver(import.meta.url);
 
 export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
   devtools: { enabled: true },
+  pages: true,
   app: {
     // транзишион для паггесов  FIXMe
     pageTransition: { name: "page", mode: "out-in" },
@@ -24,4 +26,8 @@ export default defineNuxtConfig({
   imports: {
     dirs: [resolve("./stores"), "~/stores"],
   },
+  // routeRules: {
+  //   "/": { prerender: true },
+  //   "/animal-detail/**": { swr: true },
+  // },
 });
