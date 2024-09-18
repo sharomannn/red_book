@@ -59,3 +59,9 @@ class RedBookEntry(serializers.ModelSerializer):
     class Meta:
         model = models.RedBookEntry
         fields = '__all__'
+
+
+class Observation(serializers.ModelSerializer):
+    class Meta:
+        model = models.Observation
+        fields = '__all__'

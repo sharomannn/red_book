@@ -9,6 +9,7 @@ from rest_framework.viewsets import ModelViewSet
 from core import datatools
 from core import models
 from core import serializers
+from core import permissions
 
 
 class Auth(APIView):
@@ -37,6 +38,7 @@ class User(ModelViewSet):
     """Пользователи."""
     serializer_class = serializers.User
     queryset = models.User.objects.all()
+    permission_classes = [permissions.IsAdminOrIsModerator]
 
     @action(detail=False, methods=['get'])
     def current_user(self, request: Request) -> Response:
@@ -48,3 +50,10 @@ class User(ModelViewSet):
 class RedBookEntry(ModelViewSet):
     queryset = models.RedBookEntry
     serializer_class = serializers.RedBookEntry
+    permission_classes = [permissions.IsAdminOrReadOnly]
+
+
+class Observation(ModelViewSet):
+    queryset = models.Observation.objects.all()
+    serializer_class = serializers.Observation
+    permission_classes = [permissions.IsAdminOrWriteOnly]
