@@ -1,14 +1,12 @@
 <script setup lang="ts">
-// function handler(ev: Event) {
-//   console.log(ev);
-// }
+/**Ждём ручки */
+// const appConfig = useState("config");
+
+// await callOnce(async () => {
+//   appConfig.value = await useFetch("\baseurl");
+// });
 </script>
 
 <template>
-  <div>
-    <!-- <yandex-map>
-      <yandex-map-default-features-layer />
-      <yandex-map-listener :settings="{ onClick: handler }" />
-    </yandex-map> -->
-  </div>
+  <NuxtPage />
 </template>
