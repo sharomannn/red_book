@@ -43,3 +43,8 @@ class User(ModelViewSet):
         """Получение данных текущего пользователя."""
         user_data = self.serializer_class(instance=self.request.user).data
         return Response(user_data)
+
+
+class RedBookEntry(ModelViewSet):
+    queryset = models.RedBookEntry
+    serializer_class = serializers.RedBookEntry

@@ -31,3 +31,31 @@ class AuthorizeResponse(serializers.Serializer):
     msg = serializers.CharField(required=False)
     token = serializers.CharField(required=False)
     user = User(required=False)
+
+
+class Family(serializers.ModelSerializer):
+    class Meta:
+        model = models.Family
+        fields = '__all__'
+
+
+class Order(serializers.ModelSerializer):
+    class Meta:
+        model = models.Order
+        fields = '__all__'
+
+
+class Sector(serializers.ModelSerializer):
+    class Meta:
+        model = models.Sector
+        fields = '__all__'
+
+
+class RedBookEntry(serializers.ModelSerializer):
+    order = Order()
+    family = Family()
+    sectors = Sector(many=True)
+
+    class Meta:
+        model = models.RedBookEntry
+        fields = '__all__'

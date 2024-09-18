@@ -14,5 +14,6 @@ urlpatterns = [
 router = DefaultRouter()
 
 router.register('users', views.User, basename='users')
+router.register('red_book_entries', views.RedBookEntry, basename='red_book_entries')
 
 urlpatterns += router.urls
