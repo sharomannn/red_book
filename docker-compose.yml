@@ -2,16 +2,19 @@ version: '3'
 
 volumes:
   static:
+  media:
 
 services:
   backend:
     build: ./backend/
-    end_file: .env
+    env_file: .env
     volumes:
       - static:/backend_static
+      - media:/media
   gateway:
     build: ./gateway/
     ports:
       - 8000:80
     volumes:
-      - static:/statifiles/
+      - static:/statiсfiles/
+      - media:/media/
