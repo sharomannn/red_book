@@ -2,7 +2,9 @@ import os
 import requests
 from bs4 import BeautifulSoup
 from django.core.management.base import BaseCommand
+from django.core.files import File
 from django.core.files.temp import NamedTemporaryFile
+from django.conf import settings  # Нужно для MEDIA_ROOT
 from core.models import RedBookEntry, Order, Family, Section
 from core.consts import CATEGORY
 
@@ -39,15 +41,13 @@ class Command(BaseCommand):
         name = soup.find('h1').get_text(strip=True)
         latin_name = soup.find('pre').get_text(strip=True).split('\n')[1].strip()
 
-        # Извлечение категории по первым двум словам
-        # Извлечение всех параграфов и поиск нужного по содержимому
+        # Извлечение категории
         status_paragraph = None
         for paragraph in soup.find_all('p'):
             if 'Cтатус' in paragraph.get_text():
                 status_paragraph = paragraph
                 break
 
-        # Если найден нужный параграф, продолжаем
         if status_paragraph:
             status_text = status_paragraph.get_text(strip=True).replace('Cтатус.', '').strip()
             category_key = ' '.join(status_text.split()[:2])  # Первые два слова
@@ -68,8 +68,17 @@ class Command(BaseCommand):
         section_obj, _ = Section.objects.get_or_create(name=section_nav)
 
         # Извлечение полезного HTML описания
-        description_sections = soup.find_all(['h3', 'h4', 'p'], limit=20)
-        description_html = ''.join([str(section) for section in description_sections])
+        distribution_section = soup.find('h3', text='Распространение.')
+        sources_section = soup.find('h4', text='Источники информации')
+
+        # Начинаем с включения самого тега <h3> "Распространение."
+        description_html = str(distribution_section)
+
+        # Извлечение текста между заголовками "Распространение" и "Источники информации"
+        for tag in distribution_section.find_all_next():
+            if tag == sources_section:
+                break
+            description_html += str(tag)
 
         # Сохранение фото на сервер
         image_tag = soup.find('img', class_='image-art')
@@ -80,8 +89,8 @@ class Command(BaseCommand):
                 image_url = BASE_URL + image_url  # Добавляем базовый URL
             image_name = os.path.basename(image_url)
 
-            # Создаем директорию, если она не существует
-            image_dir = os.path.join('media', 'red_book_images')
+            # Директория для изображений (используем settings.MEDIA_ROOT)
+            image_dir = os.path.join(settings.MEDIA_ROOT, 'red_book_images')
             os.makedirs(image_dir, exist_ok=True)
 
             # Скачиваем и сохраняем изображение
@@ -104,8 +113,8 @@ class Command(BaseCommand):
             order=order_obj,
             family=family_obj,
             section=section_obj,  # Связываем запись с секцией
-            description=description_html,
-            image=image_path  # Сохраняем путь к изображению
+            description=description_html,  # Сохраняем только извлеченный контент с тегом <h3>
+            image=os.path.join('red_book_images', image_name) if image_path else None  # Относительный путь к изображению
         )
         entry.save()
 
