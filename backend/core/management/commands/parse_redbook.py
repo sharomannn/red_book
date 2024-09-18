@@ -78,8 +78,6 @@ class Command(BaseCommand):
         except (RequestException, SSLError) as e:
             self.stdout.write(self.style.ERROR(f'Ошибка при скачивании {url}: {e}'))
 
-    import re
-
     def parse_and_save_html(self, file_path):
         """Парсит HTML файл и обновляет или сохраняет данные в базу."""
         try:
@@ -161,6 +159,12 @@ class Command(BaseCommand):
                         break
                     description_html += str(tag)
                 description_html += str(end_section)
+
+                # Если после секции "Рекомендации по разведению в неволе" есть абзац, включаем его
+                if recommendation_section:
+                    next_paragraph = recommendation_section.find_next('p')
+                    if next_paragraph:
+                        description_html += str(next_paragraph)
             else:
                 # Если не найдено ни одной из секций, собираем до конца значимых секций, но не включаем рекламу и прочие блоки
                 stop_tags = ['aside', 'footer', 'script', 'div', 'form',
@@ -175,8 +179,27 @@ class Command(BaseCommand):
             image_path = None
             if image_tag:
                 image_url = image_tag['src']
+                if image_url.startswith('/'):  # Проверяем, если путь относительный
+                    image_url = BASE_URL + image_url  # Добавляем базовый URL
                 image_name = os.path.basename(image_url)
-                image_path = os.path.join('red_book_images', image_name)
+
+                # Директория для изображений (используем settings.MEDIA_ROOT)
+                image_dir = os.path.join(settings.MEDIA_ROOT, 'red_book_images')
+                os.makedirs(image_dir, exist_ok=True)  # Создаем директорию, если она не существует
+
+                # Скачиваем и сохраняем изображение
+                try:
+                    image_response = requests.get(image_url, timeout=10)
+                    if image_response.status_code == 200:
+                        image_path = os.path.join(image_dir, image_name)
+                        with open(image_path, 'wb') as out_file:
+                            out_file.write(image_response.content)
+                        self.stdout.write(self.style.SUCCESS(f'Изображение сохранено: {image_path}'))
+                    else:
+                        self.stdout.write(self.style.ERROR(
+                            f'Ошибка загрузки изображения {image_url}, статус код: {image_response.status_code}'))
+                except (RequestException, SSLError) as e:
+                    self.stdout.write(self.style.ERROR(f'Ошибка при скачивании изображения {image_url}: {e}'))
 
             # Сохранение данных в базу: обновление или создание записи
             entry, created = RedBookEntry.objects.update_or_create(
@@ -199,3 +222,4 @@ class Command(BaseCommand):
 
         except Exception as e:
             self.stdout.write(self.style.WARNING(f'Ошибка обработки файла {file_path}: {e}'))
+
