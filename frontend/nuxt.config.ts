@@ -13,24 +13,13 @@ export default defineNuxtConfig({
     "@nuxtjs/eslint-module",
     "@pinia/nuxt",
     "@vueuse/nuxt",
-    "@nuxt/ui",
     "vue-yandex-maps/nuxt",
+    "@element-plus/nuxt",
   ],
   yandexMaps: {
     apikey: "409c07d0-9651-4cc8-8344-83e160f0263d",
   },
-  components: [
-    {
-      prefix: "Layout",
-      path: resolve("./components/layouts"),
-      global: true,
-    },
-    {
-      prefix: "Awesome",
-      path: resolve("./components/awesome"),
-      global: true,
-    },
-  ],
+  components: [],
 
   imports: {
     dirs: [resolve("./stores"), "~/stores"],

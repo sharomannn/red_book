@@ -24,6 +24,8 @@
     "vue-yandex-maps": "^2.1.4"
   },
   "devDependencies": {
-    "@nuxtjs/eslint-module": "^4.1.0"
+    "@element-plus/nuxt": "^1.0.10",
+    "@nuxtjs/eslint-module": "^4.1.0",
+    "element-plus": "^2.8.3"
   }
 }
