@@ -12,3 +12,4 @@ requests==2.31.0
 ipython==8.23.0
 ruff==0.4.4
 pillow==10.2.0
+beautifulsoup4==4.12.3
