@@ -43,10 +43,21 @@ class Family(models.Model):
         verbose_name = 'семейство'
         verbose_name_plural = 'семейства'
 
+class Section(models.Model):
+    name = models.CharField('раздел', max_length=100)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'раздел'
+        verbose_name_plural = 'разделы'
+
 
 class RedBookEntry(models.Model):
     name = models.CharField('название', max_length=200)
     latin_name = models.CharField('латинское название', max_length=200, blank=True, null=True)
+    section = models.ForeignKey(Section,on_delete=models.CASCADE, null=True, blank=True, related_name='entries')
     category = models.CharField('категория', max_length=1, choices=consts.CATEGORY.CHOICES, blank=True, null=True)
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='entries', verbose_name='отряд', blank=True, null=True)
     family = models.ForeignKey(Family, on_delete=models.CASCADE, related_name='entries', verbose_name='семейство', blank=True, null=True)
