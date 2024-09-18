@@ -28,3 +28,18 @@ class CATEGORY:
         (UNKNOWN_SPECIES, UNKNOWN_SPECIES_RUS),
         (RECOVERING_SPECIES, RECOVERING_SPECIES_RUS),
     )
+
+
+class SECTOR_TYPES:
+    """Типы секторов"""
+
+    PUBLIC = 'PUBLIC'
+    PRIVATE = 'PRIVATE'
+
+    PUBLIC_RUS = 'Общественный'
+    PRIVATE_RUS = 'Частный'
+
+    CHOICES = (
+        (PUBLIC, PUBLIC_RUS),
+        (PRIVATE, PRIVATE_RUS),
+    )
