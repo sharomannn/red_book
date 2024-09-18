@@ -12,7 +12,9 @@ class IsAdminOrWriteOnly(permissions.BasePermission):
             return True
 
         # Для остальных методов требуется быть администратором
-        return request.user and (request.user.is_staff or request.user.is_superuser or request.user.is_moderator)
+        return request.user and (
+            request.user.is_staff or request.user.is_superuser or getattr(request.user, 'is_moderator', False)
+        )
 
 
 class IsAdminOrReadOnly(permissions.BasePermission):

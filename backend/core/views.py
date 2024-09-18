@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
-from core import datatools, models, permissions, serializers
+from core import datatools, models, permissions, serializers, filters
 
 
 class Auth(APIView):
@@ -55,3 +55,16 @@ class Observation(ModelViewSet):
     queryset = models.Observation.objects.all()
     serializer_class = serializers.Observation
     permission_classes = [permissions.IsAdminOrWriteOnly]
+    filterset_class = filters.Observation
+
+    @action(detail=True, methods=['POST'], serializer_class=None)
+    def approve(self, request: Request, pk: int) -> Response:
+        observation = models.Observation.objects.get(pk=pk)
+        datatools.approve_observation(observation)
+        return Response(status=status.HTTP_200_OK)
+
+    @action(detail=True, methods=['POST'], serializer_class=None)
+    def refused(self, request: Request, pk: int) -> Response:
+        observation = models.Observation.objects.get(pk=pk)
+        datatools.refused_observation(observation)
+        return Response(status=status.HTTP_200_OK)

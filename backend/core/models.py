@@ -110,6 +110,7 @@ class Observation(models.Model):
     date_time = models.DateTimeField('дата и время наблюдения', blank=True, null=True)
 
     status = models.BooleanField('обработанное/необработанное', default=False)
+    approved = models.BooleanField('подтверждено', default=False)
     erroneous = models.BooleanField('ошибочное наблюдение', default=False)
 
     def __str__(self):
