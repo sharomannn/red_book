@@ -1,0 +1,17 @@
+version: '3'
+
+volumes:
+  static:
+
+services:
+  backend:
+    build: ./backend/
+    end_file: .env
+    volumes:
+      - static:/backend_static
+  gateway:
+    build: ./gateway/
+    ports:
+      - 8000:80
+    volumes:
+      - static:/statifiles/
