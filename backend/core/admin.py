@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Sector, Order, Family, RedBookEntry, Observation
+from .models import Sector, Order, Family, RedBookEntry, Observation, User
 
 @admin.register(Sector)
 class SectorAdmin(admin.ModelAdmin):
@@ -30,3 +30,8 @@ class ObservationAdmin(admin.ModelAdmin):
     list_display = ('name', 'category', 'location', 'status', 'erroneous', 'date_time', 'observer_name')
     search_fields = ('name', 'category', 'location', 'observer_name')
     list_filter = ('status', 'erroneous', 'category', 'date_time')
+
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ('username', 'email', 'is_moderator')
+    search_fields = ('username', 'email')

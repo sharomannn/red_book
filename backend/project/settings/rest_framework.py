@@ -17,5 +17,4 @@ REST_FRAMEWORK = {
     'DATETIME_INPUT_FORMAT': '%Y-%m-%d %H:%M:%S%Z',
     'DEFAULT_RENDERER_CLASSES': ('rest_framework.renderers.JSONRenderer',),
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-    'EXCEPTION_HANDLER': 'drf_standardized_errors.handler.exception_handler',
 }
