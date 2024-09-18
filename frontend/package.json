@@ -9,13 +9,23 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
+  "overrides": {
+    "vue": "latest"
+  },
   "dependencies": {
+    "@nuxt/ui": "^2.18.5",
     "@pinia/nuxt": "^0.5.4",
+    "@vueuse/core": "^11.1.0",
+    "@vueuse/nuxt": "^11.1.0",
     "nuxt": "^3.13.0",
+    "pinia": "^2.2.2",
     "vue": "latest",
-    "vue-router": "latest"
+    "vue-router": "latest",
+    "vue-yandex-maps": "^2.1.4"
   },
   "devDependencies": {
-    "@nuxtjs/eslint-module": "^4.1.0"
+    "@element-plus/nuxt": "^1.0.10",
+    "@nuxtjs/eslint-module": "^4.1.0",
+    "element-plus": "^2.8.3"
   }
 }
