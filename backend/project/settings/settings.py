@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
+
 import locale
 import os
 from pathlib import Path
@@ -38,12 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core.apps.CoreConfig',
-
     'rest_framework',
     'rest_framework.authtoken',
     'drf_spectacular',
-
+    'django_filters',
+    'core.apps.CoreConfig',
 ]
 
 MIDDLEWARE = [
@@ -128,7 +128,7 @@ locale.setlocale(locale.LC_ALL, 'ru_RU.UTF-8')
 STATIC_URL = '/backend/static/'
 MEDIA_URL = '/backend/media/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGIN_URL = '/backend/admin/login/'
 LOGOUT_URL = '/backend/admin/logout/'
@@ -138,4 +138,7 @@ LOGOUT_URL = '/backend/admin/logout/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+AUTH_USER_MODEL = 'core.User'
+
 from project.settings.rest_framework import *  # noqa
+from project.settings.other import *  # noqa
