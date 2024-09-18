@@ -119,7 +119,7 @@ USE_I18N = True
 
 USE_TZ = True
 
-
+locale.setlocale(locale.LC_ALL, 'ru_RU.UTF-8')
 
 
 # Static files (CSS, JavaScript, Images)
