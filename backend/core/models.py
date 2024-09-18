@@ -1,5 +1,20 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
+
 from core import consts
+
+
+class User(AbstractUser):
+    patronymic = models.CharField('отчество', max_length=255, blank=True)
+    birthday = models.DateField('дата рождения', blank=True, null=True)
+    is_moderator = models.BooleanField('модератор', default=False)
+
+    class Meta:
+        verbose_name = 'пользователь'
+        verbose_name_plural = 'пользователи'
+
+    def __str__(self):
+        return self.username
 
 
 class Sector(models.Model):
