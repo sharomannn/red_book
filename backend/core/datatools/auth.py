@@ -18,5 +18,4 @@ def authorize_user(credentials: dict) -> models.User:
 
     Token.objects.get_or_create(user=user)
 
-
     return user

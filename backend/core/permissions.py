@@ -1,9 +1,11 @@
 from rest_framework import permissions
 
+
 class IsAdminOrWriteOnly(permissions.BasePermission):
     """
     Разрешает редактировать объект только администраторам. Остальные пользователи могут только создавать записи.
     """
+
     def has_permission(self, request, view):
         # Разрешить создание (POST) всем пользователям
         if request.method == 'POST':
@@ -18,6 +20,7 @@ class IsAdminOrReadOnly(permissions.BasePermission):
     Разрешает только администраторам изменять данные.
     Чтение доступно для всех пользователей.
     """
+
     def has_permission(self, request, view):
         # Разрешаем чтение (GET) для всех
         if request.method in permissions.SAFE_METHODS:

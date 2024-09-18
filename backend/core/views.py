@@ -6,10 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
-from core import datatools
-from core import models
-from core import serializers
-from core import permissions
+from core import datatools, models, permissions, serializers
 
 
 class Auth(APIView):
@@ -36,6 +33,7 @@ class Auth(APIView):
 
 class User(ModelViewSet):
     """Пользователи."""
+
     serializer_class = serializers.User
     queryset = models.User.objects.all()
     permission_classes = [permissions.IsAdminOrIsModerator]

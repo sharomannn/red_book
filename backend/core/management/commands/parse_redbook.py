@@ -1,12 +1,14 @@
 import os
-import requests
-from requests.exceptions import RequestException, SSLError
-from bs4 import BeautifulSoup
-from django.core.management.base import BaseCommand
-from django.conf import settings  # Нужно для MEDIA_ROOT
-from core.models import RedBookEntry, Order, Family, Section
-from core.consts import CATEGORY
 import re
+
+import requests
+from bs4 import BeautifulSoup
+from django.conf import settings  # Нужно для MEDIA_ROOT
+from django.core.management.base import BaseCommand
+from requests.exceptions import RequestException, SSLError
+
+from core.consts import CATEGORY
+from core.models import Family, Order, RedBookEntry, Section
 
 # Словарь для сопоставления категорий по первым двум словам
 category_mapping = {
@@ -18,7 +20,8 @@ category_mapping = {
 }
 
 # Базовый URL для скачивания страниц
-BASE_URL = "https://cicon.ru"
+BASE_URL = 'https://cicon.ru'
+
 
 class Command(BaseCommand):
     help = 'Скачивание и парсинг HTML файлов для Красной книги'
@@ -33,25 +36,73 @@ class Command(BaseCommand):
 
         # Задаём список ссылок для скачивания
         links = [
-            "/spisok-pt-mosobl.html", "/malaya-poganka-mosobl.html", "/podicepsgrisegena-mo.html",
-            "/upper-ford-near.html", "/cap_bily.html", "/ciconia_nigra_mosobl.html", "/anser_anser_mo.html",
-            "/anser_erythropus_mo.html", "/cygnus_cygnus_mo.html", "/anas_strepera_mo.html",
-            "/northern_pintails.html", "/skopa-mo.html", "/osoed-mo.html", "/milvus_migrans_govinda.html",
-            "/northern_hen_harrier.html", "/pallid_harrier_mo.html", "/harrier_female.html", "/zmeeyad-mo.html",
-            "/booted_eagle_mo.html", "/greater_Sspotted_eagle.html", "/aquila_pomarina_orlik.html",
-            "/aquila_chrysaetos.html", "/haliaeetus_albicilla.html", "/falco_cherrug_mo.html",
-            "/falco_peregrinus_mo.html", "/falco_columbarius_male.html", "/falco_vespertinus_mo.html",
-            "/willow_grouse_standing.html", "/grus_grus_mo.html", "/pastushok-mo.html", "/porzana_parva.html",
-            "/haematopus_ostralegus.html", "/common_greenshank.html", "/travnik-mo.html", "/tringa_stagnatilis.html",
-            "/xenus_cinereus.html", "/philomachus_pugnax.html", "/gallinago_media.html", "/kronshep-mo.html",
-            "/limosa_limosa.html", "/malaya-chaika.html", "/chlidoniasLeucopterus.html", "/sterna_albifrons.html",
-            "/columbaoenas.html", "/bubo_bubo_mo.html", "/centro_provinciale.html", "/domovoi-sich-mo.html",
-            "/surnia-ulula.html", "/strix_uralensis_mo.html", "/strix_nebulosa.html", "/coracias-garrulus-mo.html",
-            "/alcedo-atthis-mo.html", "/common_hoopoe.html", "/picus-viridis-mo.html", "/sedoi-dyatel-mo.html",
-            "/dendrocopos_medius.html", "/dendrocopos_leucotos_mo.html", "/picoides-tridactylus-mo.html",
-            "/ullula-arborea-mo.html", "/lanius-excubitor-mo.html", "/nucifraga-caryocatactes-mo.html",
-            "/seggenrohrsaenger_hand.html", "/sylvia_nisoria.html", "/remiz_pendulinus.html", "/parus-cyanus-mo.html",
-            "/sadovay-ovsyanka.html", "/emberiza-aureola.html"
+            '/spisok-pt-mosobl.html',
+            '/malaya-poganka-mosobl.html',
+            '/podicepsgrisegena-mo.html',
+            '/upper-ford-near.html',
+            '/cap_bily.html',
+            '/ciconia_nigra_mosobl.html',
+            '/anser_anser_mo.html',
+            '/anser_erythropus_mo.html',
+            '/cygnus_cygnus_mo.html',
+            '/anas_strepera_mo.html',
+            '/northern_pintails.html',
+            '/skopa-mo.html',
+            '/osoed-mo.html',
+            '/milvus_migrans_govinda.html',
+            '/northern_hen_harrier.html',
+            '/pallid_harrier_mo.html',
+            '/harrier_female.html',
+            '/zmeeyad-mo.html',
+            '/booted_eagle_mo.html',
+            '/greater_Sspotted_eagle.html',
+            '/aquila_pomarina_orlik.html',
+            '/aquila_chrysaetos.html',
+            '/haliaeetus_albicilla.html',
+            '/falco_cherrug_mo.html',
+            '/falco_peregrinus_mo.html',
+            '/falco_columbarius_male.html',
+            '/falco_vespertinus_mo.html',
+            '/willow_grouse_standing.html',
+            '/grus_grus_mo.html',
+            '/pastushok-mo.html',
+            '/porzana_parva.html',
+            '/haematopus_ostralegus.html',
+            '/common_greenshank.html',
+            '/travnik-mo.html',
+            '/tringa_stagnatilis.html',
+            '/xenus_cinereus.html',
+            '/philomachus_pugnax.html',
+            '/gallinago_media.html',
+            '/kronshep-mo.html',
+            '/limosa_limosa.html',
+            '/malaya-chaika.html',
+            '/chlidoniasLeucopterus.html',
+            '/sterna_albifrons.html',
+            '/columbaoenas.html',
+            '/bubo_bubo_mo.html',
+            '/centro_provinciale.html',
+            '/domovoi-sich-mo.html',
+            '/surnia-ulula.html',
+            '/strix_uralensis_mo.html',
+            '/strix_nebulosa.html',
+            '/coracias-garrulus-mo.html',
+            '/alcedo-atthis-mo.html',
+            '/common_hoopoe.html',
+            '/picus-viridis-mo.html',
+            '/sedoi-dyatel-mo.html',
+            '/dendrocopos_medius.html',
+            '/dendrocopos_leucotos_mo.html',
+            '/picoides-tridactylus-mo.html',
+            '/ullula-arborea-mo.html',
+            '/lanius-excubitor-mo.html',
+            '/nucifraga-caryocatactes-mo.html',
+            '/seggenrohrsaenger_hand.html',
+            '/sylvia_nisoria.html',
+            '/remiz_pendulinus.html',
+            '/parus-cyanus-mo.html',
+            '/sadovay-ovsyanka.html',
+            '/emberiza-aureola.html',
         ]
 
         # Скачиваем и сохраняем HTML файлы
@@ -71,7 +122,7 @@ class Command(BaseCommand):
         try:
             response = requests.get(url, timeout=10)  # Тайм-аут 10 секунд
             response.raise_for_status()  # Возбудит исключение, если статус код не 200
-            filename = os.path.join(save_dir, os.path.basename(link) + ".html")
+            filename = os.path.join(save_dir, os.path.basename(link) + '.html')
             with open(filename, 'w', encoding='utf-8') as file:
                 file.write(response.text)
             self.stdout.write(self.style.SUCCESS(f'Скачан файл: {filename}'))
@@ -91,15 +142,15 @@ class Command(BaseCommand):
                 name = name_tag.get_text(strip=True)
             else:
                 self.stdout.write(self.style.WARNING(f'Название не найдено в файле {file_path}'))
-                name = "Неизвестное название"
+                name = 'Неизвестное название'
 
             pre_tag = soup.find('pre')
             if pre_tag:
                 pre_text_lines = pre_tag.get_text(strip=True).split('\n')
-                latin_name = pre_text_lines[1].strip() if len(pre_text_lines) > 1 else "Неизвестное латинское название"
+                latin_name = pre_text_lines[1].strip() if len(pre_text_lines) > 1 else 'Неизвестное латинское название'
             else:
                 self.stdout.write(self.style.WARNING(f'Латинское название не найдено в файле {file_path}'))
-                latin_name = "Неизвестное латинское название"
+                latin_name = 'Неизвестное латинское название'
 
             # Проверка категории статуса
             status_paragraph = None
@@ -121,8 +172,8 @@ class Command(BaseCommand):
                 order_name = pre_text_lines[3].split(' - ')[0].strip()
                 family_name = pre_text_lines[4].split(' - ')[0].strip()
             else:
-                order_name = "Неизвестный отряд"
-                family_name = "Неизвестное семейство"
+                order_name = 'Неизвестный отряд'
+                family_name = 'Неизвестное семейство'
 
             order_obj, _ = Order.objects.get_or_create(name=order_name)
             family_obj, _ = Family.objects.get_or_create(name=family_name, order=order_obj)
@@ -131,14 +182,14 @@ class Command(BaseCommand):
             section_nav = soup.find('nav')
             if section_nav:
                 section_links = section_nav.find_all('a')
-                section_name = section_links[-1].get_text(strip=True) if section_links else "Неизвестная секция"
+                section_name = section_links[-1].get_text(strip=True) if section_links else 'Неизвестная секция'
             else:
-                section_name = "Неизвестная секция"
+                section_name = 'Неизвестная секция'
             section_obj, _ = Section.objects.get_or_create(name=section_name)
 
             # Ищем секцию "Распространение" с частичным совпадением
             distribution_section = soup.find('h3', text=re.compile('Распространение', re.IGNORECASE))
-            description_html = ""
+            description_html = ''
             if distribution_section:
                 description_html += str(distribution_section)
             else:
@@ -146,8 +197,9 @@ class Command(BaseCommand):
 
             # Ищем секцию "Источники информации" с частичным совпадением
             sources_section = soup.find('h4', text=re.compile('Источники информации', re.IGNORECASE))
-            recommendation_section = soup.find('h4',
-                                               text=re.compile('Рекомендации по разведению в неволе', re.IGNORECASE))
+            recommendation_section = soup.find(
+                'h4', text=re.compile('Рекомендации по разведению в неволе', re.IGNORECASE)
+            )
 
             # Определяем секцию завершения описания (либо Источники, либо Рекомендации)
             end_section = sources_section or recommendation_section
@@ -167,8 +219,14 @@ class Command(BaseCommand):
                         description_html += str(next_paragraph)
             else:
                 # Если не найдено ни одной из секций, собираем до конца значимых секций, но не включаем рекламу и прочие блоки
-                stop_tags = ['aside', 'footer', 'script', 'div', 'form',
-                             'nav']  # Теги, которые сигнализируют конец значимого контента
+                stop_tags = [
+                    'aside',
+                    'footer',
+                    'script',
+                    'div',
+                    'form',
+                    'nav',
+                ]  # Теги, которые сигнализируют конец значимого контента
                 for tag in distribution_section.find_all_next():
                     if tag.name in stop_tags:
                         break
@@ -196,8 +254,11 @@ class Command(BaseCommand):
                             out_file.write(image_response.content)
                         self.stdout.write(self.style.SUCCESS(f'Изображение сохранено: {image_path}'))
                     else:
-                        self.stdout.write(self.style.ERROR(
-                            f'Ошибка загрузки изображения {image_url}, статус код: {image_response.status_code}'))
+                        self.stdout.write(
+                            self.style.ERROR(
+                                f'Ошибка загрузки изображения {image_url}, статус код: {image_response.status_code}'
+                            )
+                        )
                 except (RequestException, SSLError) as e:
                     self.stdout.write(self.style.ERROR(f'Ошибка при скачивании изображения {image_url}: {e}'))
 
@@ -210,9 +271,9 @@ class Command(BaseCommand):
                     'order': order_obj,
                     'family': family_obj,
                     'section': section_obj,
-                    'description': description_html if description_html else "Описание не найдено",
-                    'image': image_path if image_path else None
-                }
+                    'description': description_html if description_html else 'Описание не найдено',
+                    'image': image_path if image_path else None,
+                },
             )
 
             if created:
@@ -222,4 +283,3 @@ class Command(BaseCommand):
 
         except Exception as e:
             self.stdout.write(self.style.WARNING(f'Ошибка обработки файла {file_path}: {e}'))
-
