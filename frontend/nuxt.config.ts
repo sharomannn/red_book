@@ -8,7 +8,6 @@ export default defineNuxtConfig({
   app: {
     // транзишион для паггесов  FIXMe
     pageTransition: { name: "page", mode: "out-in" },
-    // layoutTransition: { name: "layout", mode: "out-in" },
   },
 
   modules: [
@@ -30,6 +29,8 @@ export default defineNuxtConfig({
   },
   routeRules: {
     "/": { prerender: true },
-    "/animal-detail/**": { swr: true },
+    "/auth-form": { prerender: true },
+    "/animal-detail": { prerender: true },
+    // "/map-redbook-animal": {},
   },
 });

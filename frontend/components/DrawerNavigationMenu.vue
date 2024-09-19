@@ -4,7 +4,7 @@ const { show } = defineProps<{
 }>();
 
 const emits = defineEmits<{
-  (e: "update:modelValue", flag: boolean): void;
+  (e: "update:show", flag: boolean): void;
 }>();
 </script>
 
@@ -15,7 +15,7 @@ const emits = defineEmits<{
     direction="ltr"
     :with-header="false"
     :model-value="show"
-    @close="emits('update:modelValue', false)"
+    @close="emits('update:show', false)"
   >
     <div>
       <h2
@@ -65,32 +65,3 @@ const emits = defineEmits<{
     </div>
   </ElDrawer>
 </template>
-
-<style scoped lang="scss">
-.el-menu {
-  border-right: 0;
-}
-
-.el-sub-menu__title {
-  padding-right: 0;
-}
-
-:deep(.el-menu .el-sub-menu__title .el-sub-menu__icon-arrow) {
-  position: initial;
-  margin-top: 2px;
-  margin-left: 8px;
-
-  svg {
-    width: 16px;
-    height: 16px;
-  }
-}
-
-:deep(.el-menu .el-menu-item [class^="el-icon"]) {
-  margin-right: 8px;
-}
-
-:deep(.el-menu .el-menu-item-group__title) {
-  display: none;
-}
-</style>
