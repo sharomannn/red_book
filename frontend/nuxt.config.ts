@@ -5,18 +5,19 @@ const { resolve } = createResolver(import.meta.url);
 export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
   devtools: { enabled: true },
-  pages: true,
   app: {
     // транзишион для паггесов  FIXMe
     pageTransition: { name: "page", mode: "out-in" },
-    layoutTransition: { name: "layout", mode: "out-in" },
   },
+
   modules: [
-    "@nuxtjs/eslint-module",
+    // "@nuxtjs/eslint-module",
     "@pinia/nuxt",
     "@vueuse/nuxt",
     "vue-yandex-maps/nuxt",
     "@element-plus/nuxt",
+    "@nuxt/icon",
+    "@nuxtjs/tailwindcss",
   ],
   yandexMaps: {
     apikey: "409c07d0-9651-4cc8-8344-83e160f0263d",
@@ -26,8 +27,10 @@ export default defineNuxtConfig({
   imports: {
     dirs: [resolve("./stores"), "~/stores"],
   },
-  // routeRules: {
-  //   "/": { prerender: true },
-  //   "/animal-detail/**": { swr: true },
-  // },
+  routeRules: {
+    "/": { prerender: true },
+    "/auth-form": { prerender: true },
+    "/animal-detail": { prerender: true },
+    // "/map-redbook-animal": {},
+  },
 });
