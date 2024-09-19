@@ -5,13 +5,13 @@ FROM node:18-alpine AS builder
 WORKDIR /app
 
 # Копируем файлы package.json и package-lock.json
-COPY package*.json ./
+COPY frontend/package*.json ./
 
 # Устанавливаем зависимости
 RUN npm install
 
 # Копируем остальные файлы проекта
-COPY . .
+COPY frontend/ .
 
 # Собираем Nuxt.js приложение
 RUN npm run build
