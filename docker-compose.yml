@@ -13,7 +13,7 @@ services:
     env_file:
       - ./backend/.env
     expose:
-      - "80"
+      - "8000"  # Приложение слушает на 8000 порту
     networks:
       - app_network
 
@@ -24,7 +24,7 @@ services:
     volumes:
       - frontend_static:/usr/share/nginx/html
     expose:
-      - "80"
+      - "80"  # Фронтенд будет слушать на порту 80
     depends_on:
       - backend
     networks:
@@ -33,10 +33,10 @@ services:
   nginx:
     image: nginx:alpine
     ports:
-      - "80:80"
+      - "80:80"  # Экспонируем порт 80 для доступа извне
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-      - frontend_static:/usr/share/nginx/html
+      - ./nginx.conf:/etc/nginx/nginx.conf  # Подключаем конфигурацию Nginx
+      - frontend_static:/usr/share/nginx/html  # Статика для фронтенда
     depends_on:
       - frontend
     networks:
@@ -45,3 +45,9 @@ services:
 networks:
   app_network:
     driver: bridge
+
+volumes:
+  backend_static:
+  backend_media:
+  backend_logs:
+  frontend_static:
