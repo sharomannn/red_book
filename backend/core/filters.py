@@ -13,4 +13,4 @@ class Observation(django_filters.FilterSet):
 class RedBookEntry(django_filters.FilterSet):
     class Meta:
         model = models.RedBookEntry
-        fields = ('name', 'latin_name')
+        fields = ('name', 'latin_name', 'category',)
