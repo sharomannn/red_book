@@ -1,40 +1,38 @@
 <script setup lang="ts">
 import DrawerNavigationMenu from "./DrawerNavigationMenu.vue";
+import MenuIcon from "./MenuIcon.vue";
+import ArrowIcon from "./ArrowIcon.vue";
 
 const showNavigationDrawer = ref(false);
-// const item = {
-//   date: "2016-05-02",
-//   name: "Tom",
-//   address: "No. 189, Grove St, Los Angeles",
-// };
-// const tableData = ref(Array.from({ length: 20 }).fill(item));
 </script>
 
 <template>
-  <div>
-    <div class="flex h-[4vh] w-full items-center justify-between">
-      <div class="flex items-center">
-        <ElIcon
-          size="32"
-          icon="  "
-          class="my-[3px] mr-4 cursor-pointer"
-          @click="showNavigationDrawer = true"
-        />
-        {{ showNavigationDrawer }}
-        <ElLink :underline="false" @click="">
-          <h1 class="mr-6 text-[32px]/[38.4px] font-bold text-brand_blue">
+  <div class="shadow-xl">
+    <el-container class="flex size-full flex-col gap-4 bg-bg_main p-4">
+      <div class="flex h-[4vh] w-full items-center justify-between">
+        <div class="flex items-center">
+          <ElButton link @click="showNavigationDrawer = true"
+            ><MenuIcon
+          /></ElButton>
+        </div>
+
+        <div class="flex flex-col items-center">
+          <h2 class="py-1 text-[32px]/[38.4px] text-brand_blue">
             КРАСНАЯ КНИГА
-          </h1>
-        </ElLink>
-      </div>
+          </h2>
+          <h2>Москва</h2>
+        </div>
 
-      <div class="flex items-center justify-center gap-2">
-        <ElButton ref="buttonRef" size="small" round> </ElButton>
-      </div>
+        <ElButton round color="#694DF9">
+          <div class="flex gap-2 items-center">
+            Карта Москвы
+            <ElIcon> <ArrowIcon /> </ElIcon>
+          </div>
+        </ElButton>
 
-      <Teleport to="body">
-        <DrawerNavigationMenu v-model:show="showNavigationDrawer" />
-      </Teleport>
-    </div>
+        <Teleport to="body">
+          <DrawerNavigationMenu v-model="showNavigationDrawer" />
+        </Teleport></div
+    ></el-container>
   </div>
 </template>
