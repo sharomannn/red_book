@@ -29,7 +29,7 @@ const emits = defineEmits<{
           <ElIcon class="text-inherit">
             <TableCellIcon />
           </ElIcon>
-          <span> Активные обращения </span>
+          <span> Все животные </span>
         </ElMenuItem>
 
         <ElMenuItem
