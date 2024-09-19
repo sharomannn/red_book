@@ -1,15 +1,31 @@
-FROM node:16 as build
+# Stage 1: Сборка приложения
+FROM node:18-alpine AS builder
 
-COPY package.json package.json
+# Устанавливаем рабочую директорию
+WORKDIR /app
+
+# Копируем файлы package.json и package-lock.json
+COPY package*.json ./
+
+# Устанавливаем зависимости
 RUN npm install
 
+# Копируем остальные файлы проекта
 COPY . .
+
+# Собираем Nuxt.js приложение
 RUN npm run build
 
-FROM nginx: stable-alpine
+# Stage 2: Запуск Nginx для сервинга приложения
+FROM nginx:alpine
 
-COPY --from=build /dist /usr/share/nginx/html
-COPY --from=build ../nginx.conf /etc/nginx/conf.d/default.conf
+# Копируем собранные файлы на сервер
+COPY --from=builder /app/.output/public /usr/share/nginx/html
 
-EXPOSE 3000
-CMD [ "nginx", "-g", "daemon off;" ]
+# Копируем Nginx конфигурацию
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# Открываем порт 80
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
