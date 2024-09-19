@@ -55,6 +55,6 @@ export function makeRequest<T>({
   });
 }
 
-export default { instance, makeRequest };
+export default instance
 
 const baseHeaders = import.meta.env.DEV ? { ...config.csrfHeader } : {};

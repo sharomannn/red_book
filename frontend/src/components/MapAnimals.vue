@@ -10,10 +10,22 @@ import {
   LTooltip,
 } from "@vue-leaflet/vue-leaflet";
 import "leaflet/dist/leaflet.css";
+import { map } from "../services/api";
+
+const entries = ref();
+
+async function getAllCoordinates() {
+  try {
+    const { data } = await map.getRedBookEntries();
+    entries.value = data;
+  } catch (e) {
+    console.error(e);
+  }
+}
 
 const zoom = ref(6);
 const center = ref();
-const map = ref<HTMLElement | null>();
+// const map = ref<HTMLElement | null>();
 const url = ref("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
 
 function zoomPlus() {
@@ -23,10 +35,14 @@ function zoomPlus() {
 function zoomMinus() {
   zoom.value -= 1;
 }
+
+onBeforeMount(async () => {
+  await getAllCoordinates();
+});
 </script>
 
 <template>
-  <l-map ref="map" style="height: 350px" :zoom="zoom" :center="center">
+  <l-map style="height: 350px" :zoom="zoom" :center="center">
     <l-tile-layer :url="url"></l-tile-layer>
     <!-- <l-marker></l-marker> -->
   </l-map>
