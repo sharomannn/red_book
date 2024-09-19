@@ -1,20 +1,13 @@
-import axios from 'axios'
-import { tokenInterceptor } from './interceptors'
+import axios from "axios";
+import { tokenInterceptor } from "./interceptors";
 
-const mapUrl = {
-  local: `${import.meta.env.VITE_APP_API_URL}`,
-  prod: `${window.location.origin}/backend`,
-}
-const apiBaseURL = window.location.hostname === 'localhost' ? mapUrl.local : mapUrl.prod
+const apiBaseURL = import.meta.env.VITE_BASE_URL;
 
 const instance = axios.create({
   baseURL: apiBaseURL,
-})
+});
 
-instance.interceptors.request.use(tokenInterceptor)
-instance.interceptors.response.use(
-  response => response,
-  error => errorInterceptor(error),
-)
+instance.interceptors.request.use(tokenInterceptor);
+instance.interceptors.response.use((response) => response);
 
-export default instance
+export default instance;
