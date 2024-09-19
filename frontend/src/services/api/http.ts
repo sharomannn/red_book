@@ -47,7 +47,7 @@ export function makeRequest<T>({
     url,
     method,
     responseType,
-    headers: { ...baseHeaders, ...headers },
+    headers: { ...headers },
     params,
     data,
     paramsSerializer: { indexes: null },
@@ -55,6 +55,6 @@ export function makeRequest<T>({
   });
 }
 
-export default instance
+export default instance;
 
-const baseHeaders = import.meta.env.DEV ? { ...config.csrfHeader } : {};
+// const baseHeaders = import.meta.env.DEV ? { ...config.csrfHeader } : {};

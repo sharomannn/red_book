@@ -31,3 +31,11 @@ export function updateRedBookEntrie(id: number, data: unknown) {
     data,
   });
 }
+
+export function getObservation(params: unknown) {
+  return makeRequest({
+    url: `${baseURL}/red_book_entries`,
+    method: "GET",
+    params,
+  });
+}

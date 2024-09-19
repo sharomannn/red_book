@@ -1,3 +1,4 @@
-export * as auth from "./rest/auth";
-export * as user from "@/services/api/rest/user";
-export * as map from "@/services/api/rest/map";
+import * as map from "../api/rest/map";
+// import config from "../api/config";
+
+export { map };
