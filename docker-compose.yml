@@ -21,6 +21,8 @@ services:
       dockerfile: Dockerfile
     volumes:
       - frontend_static:/usr/share/nginx/html
+      - backend_static:/opt/app/static
+      - backend_media:/opt/app/media
     ports:
       - "3000:80"
     depends_on:
