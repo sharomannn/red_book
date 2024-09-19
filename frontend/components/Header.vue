@@ -16,11 +16,11 @@ const showNavigationDrawer = ref(false);
       <div class="flex items-center">
         <ElIcon
           size="32"
+          icon="  "
           class="my-[3px] mr-4 cursor-pointer"
           @click="showNavigationDrawer = true"
-        >
-        </ElIcon>
-
+        />
+        {{ showNavigationDrawer }}
         <ElLink :underline="false" @click="">
           <h1 class="mr-6 text-[32px]/[38.4px] font-bold text-brand_blue">
             КРАСНАЯ КНИГА

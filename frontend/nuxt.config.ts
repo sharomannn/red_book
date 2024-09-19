@@ -31,6 +31,6 @@ export default defineNuxtConfig({
     "/": { prerender: true },
     "/auth-form": { prerender: true },
     "/animal-detail": { prerender: true },
-    "map-redbook-animal": { swr: true },
+    // "/map-redbook-animal": {},
   },
 });
