@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import {
-  // LCircleMarker,
+  LCircleMarker,
   LControlZoom,
   LIcon,
   LMap,
   LMarker,
   LPopup,
   LTileLayer,
-  // LTooltip,
+  LTooltip,
 } from "@vue-leaflet/vue-leaflet";
 import "leaflet/dist/leaflet.css";
 
@@ -25,28 +25,30 @@ function zoomMinus() {
 </script>
 
 <template>
-  <LMap ref="map" :zoom="zoom" :use-global-leaflet="true" :center="center">
-    <LTileLayer
-      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      layer-type="base"
-      name="OpenStreetMap"
-    />
-    <LControlZoom position="topright" />  
-  </LMap>
-  <div
-    class="relative right-[-96vw] top-[-50vh] flex size-0 flex-col gap-3"
-    style="z-index: 1000"
-  >
-    <ElButton circle class="shadow-lg" @click="zoomPlus">
-      <ElIcon :size="14" color="#000000">
-        <Plus />
-      </ElIcon>
-    </ElButton>
-    <ElButton circle class="shadow-lg" @click="zoomMinus">
-      <ElIcon :size="14" color="#000000">
-        <Minus />
-      </ElIcon>
-    </ElButton>
+  <div style=";">
+    <LMap ref="map" :zoom="zoom" :use-global-leaflet="true" :center="center">
+      <LTileLayer
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        layer-type="base"
+        name="OpenStreetMap"
+      />
+      <LControlZoom position="topright" />
+    </LMap>
+    <div
+      class="relative right-[-96vw] top-[-50vh] flex size-0 flex-col gap-3"
+      style="z-index: 1000"
+    >
+      <ElButton circle class="shadow-lg" @click="zoomPlus">
+        <ElIcon :size="14" color="#000000">
+          <Plus />
+        </ElIcon>
+      </ElButton>
+      <ElButton circle class="shadow-lg" @click="zoomMinus">
+        <ElIcon :size="14" color="#000000">
+          <Minus />
+        </ElIcon>
+      </ElButton>
+    </div>
   </div>
 </template>
 
@@ -93,9 +95,5 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
 .leaflet-popup-tip {
   display: none;
-}
-
-.marker-cluster-small div {
-  background-color: #ffffff;
 }
 </style>
