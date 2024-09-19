@@ -46,7 +46,7 @@ onBeforeMount(async () => {
     <l-tile-layer :url="url"></l-tile-layer>
     <!-- <l-marker></l-marker> -->
   </l-map>
-  <div
+  <!-- <div
     class="relative right-[-96vw] top-[-50vh] flex size-0 flex-col gap-3"
     style="z-index: 1000"
   >
@@ -59,8 +59,8 @@ onBeforeMount(async () => {
       <ElIcon :size="14" color="#000000">
         <Minus />
       </ElIcon>
-    </ElButton>
-  </div>
+    </ElButton> -->
+  <!-- </div> -->
 </template>
 
 <style lang="scss">
