@@ -1,25 +1,47 @@
-services:
-  nginx:
-    image: nginx:stable-alpine
-    ports:
-      - "80:80"
-    volumes:
-      - './nginx.conf:/etc/nginx/nginx.conf'
-    depends_on:
-      - backend
-      - frontend
-    networks:
-      - dev
-    
+version: '3.8'
 
+services:
   backend:
     build:
       context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend:/opt/app
+      - backend_static:/static
+      - backend_media:/media
+      - backend_logs:/logs
+    env_file:
+      - ./backend/.env
+    expose:
+      - "80"
     networks:
-      - dev
+      - app_network
 
   frontend:
     build:
       context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - frontend_static:/usr/share/nginx/html
+    expose:
+      - "80"
+    depends_on:
+      - backend
     networks:
-      - dev
+      - app_network
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - frontend_static:/usr/share/nginx/html
+    depends_on:
+      - frontend
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge
