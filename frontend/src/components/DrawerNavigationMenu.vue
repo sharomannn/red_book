@@ -26,22 +26,28 @@ const emits = defineEmits<{
         <ElMenuItem
           class="flex justify-center text-[14px]/[22.4px] text-text_main"
         >
-          <ElIcon class="text-inherit"> </ElIcon>
-          <span> Все животные </span>
+          <router-link :to="{ name: 'AllAnimal' }"
+            ><ElIcon class="text-inherit"> </ElIcon>
+            <span> Все животные </span></router-link
+          >
         </ElMenuItem>
 
         <ElMenuItem
           class="flex justify-center text-[14px]/[22.4px] text-text_main"
         >
-          <ElIcon class="text-inherit"> </ElIcon>
-          <span> Архив обращений </span>
+          <router-link :to="{ name: 'Home' }">
+            <ElIcon class="text-inherit"> </ElIcon>
+            <span> Главная страница </span>
+          </router-link>
         </ElMenuItem>
 
         <ElMenuItem
           class="flex justify-center text-[14px]/[22.4px] text-text_main"
         >
-          <ElIcon> </ElIcon>
-          <span> Журнал звонков </span>
+          <router-link :to="{ name: 'Auth' }">
+            <ElIcon> </ElIcon>
+            <span> Авторизация </span>
+          </router-link>
         </ElMenuItem>
       </ElMenu>
     </div>
