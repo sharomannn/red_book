@@ -2,13 +2,23 @@
 import DrawerNavigationMenu from "./DrawerNavigationMenu.vue";
 import MenuIcon from "./MenuIcon.vue";
 import ArrowIcon from "./ArrowIcon.vue";
-import { useRouter } from "vue-router";
+import { useMap } from "@/utils/map";
+import { useRoute, useRouter } from "vue-router";
 
 const showNavigationDrawer = ref(false);
+const route = useRoute();
 const router = useRouter();
 
-function navigateToMap(): void {
-  router.push({ name: "Map" });
+const map = useMap();
+
+const isMapPage = computed(() => route.name === "AnimalsMap");
+
+function navigateToAllAnimal() {
+  router.push({ name: "AllAnimal" });
+}
+
+function openMap() {
+  map.open();
 }
 </script>
 
@@ -29,9 +39,15 @@ function navigateToMap(): void {
           <h2>Москва</h2>
         </div>
 
-        <ElButton round color="#694DF9" @click="navigateToMap">
+        <ElButton v-if="!isMapPage" round color="#694DF9" @click="openMap">
           <div class="flex gap-2 items-center">
             Карта Москвы
+            <ElIcon> <ArrowIcon /> </ElIcon>
+          </div>
+        </ElButton>
+        <ElButton v-else round color="#694DF9" @click="navigateToAllAnimal">
+          <div class="flex gap-2 items-center">
+            Все краснокнижные животные
             <ElIcon> <ArrowIcon /> </ElIcon>
           </div>
         </ElButton>
