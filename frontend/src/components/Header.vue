@@ -2,8 +2,14 @@
 import DrawerNavigationMenu from "./DrawerNavigationMenu.vue";
 import MenuIcon from "./MenuIcon.vue";
 import ArrowIcon from "./ArrowIcon.vue";
+import { useRouter } from "vue-router";
 
 const showNavigationDrawer = ref(false);
+const router = useRouter();
+
+function navigateToMap(): void {
+  router.push({ name: "Map" });
+}
 </script>
 
 <template>
@@ -23,7 +29,7 @@ const showNavigationDrawer = ref(false);
           <h2>Москва</h2>
         </div>
 
-        <ElButton round color="#694DF9">
+        <ElButton round color="#694DF9" @click="navigateToMap">
           <div class="flex gap-2 items-center">
             Карта Москвы
             <ElIcon> <ArrowIcon /> </ElIcon>
