@@ -7,5 +7,7 @@ import Header from "~/components/Header.vue";
     <el-header>
       <Header />
     </el-header>
+    <el-main> </el-main>
+    <el-footer> </el-footer>
   </el-container>
 </template>

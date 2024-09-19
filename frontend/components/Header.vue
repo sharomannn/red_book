@@ -23,7 +23,7 @@ const showNavigationDrawer = ref(false);
 
         <ElLink :underline="false" @click="">
           <h1 class="mr-6 text-[32px]/[38.4px] font-bold text-brand_blue">
-            ЦОВ 112
+            КРАСНАЯ КНИГА
           </h1>
         </ElLink>
       </div>
