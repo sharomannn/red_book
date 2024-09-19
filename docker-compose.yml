@@ -19,12 +19,12 @@ services:
 
   frontend:
     build:
-      context: ./frontend
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./frontend/Dockerfile
     volumes:
       - frontend_static:/usr/share/nginx/html
     expose:
-      - "80"  # Фронтенд будет слушать на порту 80
+      - "80"
     depends_on:
       - backend
     networks:
