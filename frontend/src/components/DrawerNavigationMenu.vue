@@ -26,27 +26,21 @@ const emits = defineEmits<{
         <ElMenuItem
           class="flex justify-center text-[14px]/[22.4px] text-text_main"
         >
-          <ElIcon class="text-inherit">
-            <TableCellIcon />
-          </ElIcon>
+          <ElIcon class="text-inherit"> </ElIcon>
           <span> Все животные </span>
         </ElMenuItem>
 
         <ElMenuItem
           class="flex justify-center text-[14px]/[22.4px] text-text_main"
         >
-          <ElIcon class="text-inherit">
-            <DocumentEditingIcon />
-          </ElIcon>
+          <ElIcon class="text-inherit"> </ElIcon>
           <span> Архив обращений </span>
         </ElMenuItem>
 
         <ElMenuItem
           class="flex justify-center text-[14px]/[22.4px] text-text_main"
         >
-          <ElIcon>
-            <Phone />
-          </ElIcon>
+          <ElIcon> </ElIcon>
           <span> Журнал звонков </span>
         </ElMenuItem>
       </ElMenu>

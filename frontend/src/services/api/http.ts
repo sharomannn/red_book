@@ -1,21 +1,7 @@
 import axios from "axios";
 import { tokenInterceptor } from "./interceptors";
-interface Request {
-  url: string;
-  method?: string;
-  responseType?: ResponseType;
-  headers?: any;
-  params?: any;
-  data?: any;
-  paramsSerializer?: (params: object | string) => string;
-}
 
-const mapUrl = {
-  local: `${import.meta.env.VITE_APP_API_URL}`,
-  prod: `${window.location.origin}/backend`,
-};
-const apiBaseURL =
-  window.location.hostname === "localhost" ? mapUrl.local : mapUrl.prod;
+const apiBaseURL = import.meta.env.VITE_BASE_URL;
 
 const instance = axios.create({
   baseURL: apiBaseURL,
