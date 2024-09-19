@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Header from "~/components/Header.vue";
+import Header from "@/components/Header.vue";
 </script>
 
 <template>
@@ -25,7 +25,7 @@ import Header from "~/components/Header.vue";
         </div>
         <div class="w-full max-w-[50%]">
           <img
-            src="../assets/animal.jpg"
+            src="../assets/images/animal.jpg"
             alt=""
             class="w-full rounded-[60px]"
           />
