@@ -52,4 +52,6 @@ VOLUME /logs/
 CMD rm -rf static; ln -s /static static; \
     rm -rf media; ln -s /media media; \
     rm -rf logs; ln -s /logs logs; \
+    python manage.py collectstatic --noinput; \
+    python manage.py migrate; \
     /usr/bin/supervisord -c /etc/supervisor/supervisord.conf --nodaemon

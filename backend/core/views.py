@@ -49,6 +49,7 @@ class RedBookEntry(ModelViewSet):
     queryset = models.RedBookEntry.objects.all()
     serializer_class = serializers.RedBookEntry
     permission_classes = [permissions.IsAdminOrReadOnly]
+    filterset_class = filters.RedBookEntry
 
 
 class Observation(ModelViewSet):

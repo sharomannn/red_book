@@ -3,6 +3,8 @@ import MainPage from "../pages/MainPage.vue";
 import AuthPage from "../pages/AuthPage.vue";
 import HomePage from "../pages/HomePage.vue";
 import AllAnimal from "@/pages/AllAnimal.vue";
+import MapAnimalsPage from "../pages/MapAnimalsPage.vue";
+import MapAnimals from "@/components/MapAnimals.vue";
 import DetailAnimal from "@/components/DetailAnimal.vue";
 
 const routes: readonly RouteRecordRaw[] = [
@@ -26,6 +28,19 @@ const routes: readonly RouteRecordRaw[] = [
         path: "/detail-animal/:id",
         name: "DetailAnimal",
         component: DetailAnimal,
+      },
+    ],
+  },
+  {
+    path: "/map",
+    name: "AnimalsMap",
+    redirect: "/map/animals",
+    component: MapAnimalsPage,
+    children: [
+      {
+        path: "/map/animals",
+        name: "AnimalsMap",
+        component: MapAnimals,
       },
     ],
   },
