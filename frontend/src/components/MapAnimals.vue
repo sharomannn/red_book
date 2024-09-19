@@ -14,6 +14,7 @@ import "leaflet/dist/leaflet.css";
 const zoom = ref(6);
 const center = ref();
 const map = ref<HTMLElement | null>();
+const url = ref("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
 
 function zoomPlus() {
   zoom.value++;
@@ -25,30 +26,24 @@ function zoomMinus() {
 </script>
 
 <template>
-  <div style=";">
-    <LMap ref="map" :zoom="zoom" :use-global-leaflet="true" :center="center">
-      <LTileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        layer-type="base"
-        name="OpenStreetMap"
-      />
-      <LControlZoom position="topright" />
-    </LMap>
-    <div
-      class="relative right-[-96vw] top-[-50vh] flex size-0 flex-col gap-3"
-      style="z-index: 1000"
-    >
-      <ElButton circle class="shadow-lg" @click="zoomPlus">
-        <ElIcon :size="14" color="#000000">
-          <Plus />
-        </ElIcon>
-      </ElButton>
-      <ElButton circle class="shadow-lg" @click="zoomMinus">
-        <ElIcon :size="14" color="#000000">
-          <Minus />
-        </ElIcon>
-      </ElButton>
-    </div>
+  <l-map ref="map" style="height: 350px" :zoom="zoom" :center="center">
+    <l-tile-layer :url="url"></l-tile-layer>
+    <!-- <l-marker></l-marker> -->
+  </l-map>
+  <div
+    class="relative right-[-96vw] top-[-50vh] flex size-0 flex-col gap-3"
+    style="z-index: 1000"
+  >
+    <ElButton circle class="shadow-lg" @click="zoomPlus">
+      <ElIcon :size="14" color="#000000">
+        <Plus />
+      </ElIcon>
+    </ElButton>
+    <ElButton circle class="shadow-lg" @click="zoomMinus">
+      <ElIcon :size="14" color="#000000">
+        <Minus />
+      </ElIcon>
+    </ElButton>
   </div>
 </template>
 
