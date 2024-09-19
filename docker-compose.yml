@@ -10,21 +10,21 @@ services:
       - backend_static:/static
       - backend_media:/media
       - backend_logs:/logs
-    env_file:
-      - ./backend/.env
-    expose:
-      - "8000"  # Приложение слушает на 8000 порту
+#    env_file:
+#      - ./backend/.env
     networks:
       - app_network
 
   frontend:
     build:
-      context: .
-      dockerfile: ./frontend/Dockerfile
+      context: frontend
+      dockerfile: Dockerfile
     volumes:
       - frontend_static:/usr/share/nginx/html
-    expose:
-      - "80"
+      - backend_static:/opt/app/static
+      - backend_media:/opt/app/media
+    ports:
+      - "3000:80"
     depends_on:
       - backend
     networks:

@@ -54,7 +54,7 @@ class Sector(serializers.ModelSerializer):
 class RedBookEntry(serializers.ModelSerializer):
     order = Order(read_only=True)
     family = Family(read_only=True)
-    sectors = Sector(many=True, read_only=True)
+    sector = Sector(many=True, read_only=True)
 
     order_id = serializers.IntegerField(required=False, allow_null=True)
     family_id = serializers.IntegerField(required=False, allow_null=True)
