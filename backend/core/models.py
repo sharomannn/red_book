@@ -112,6 +112,7 @@ class Observation(models.Model):
     status = models.BooleanField('обработанное/необработанное', default=False)
     approved = models.BooleanField('подтверждено', default=False)
     erroneous = models.BooleanField('ошибочное наблюдение', default=False)
+    approval_personal_data = models.BooleanField('согласие на обработку персональных данных', default=False)
 
     def __str__(self):
         return f'{self.name} ({self.category})'
