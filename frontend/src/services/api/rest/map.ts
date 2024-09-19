@@ -26,7 +26,7 @@ export function createRedBookEntrie(data: unknown) {
 
 export function updateRedBookEntrie(id: number, data: unknown) {
   return makeRequest({
-    url: `${baseURL}/red_book_entries/${id}`,
+    url: `${baseURL}/red_book_entries/${id}/`,
     method: "PATCH",
     data,
   });
@@ -34,7 +34,7 @@ export function updateRedBookEntrie(id: number, data: unknown) {
 
 export function getObservation(params: unknown) {
   return makeRequest({
-    url: `${baseURL}/red_book_entries`,
+    url: `${baseURL}/observation/`,
     method: "GET",
     params,
   });
