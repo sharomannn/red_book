@@ -25,7 +25,7 @@ function setMapCenter(latitude: string | number, longitude: string | number) {
 }
 async function getAllCoordinates() {
   try {
-    const { data } = await map.getRedBookEntries();
+    const { data } = await map.getObservation();
     entries.value = data;
   } catch (e) {
     console.error(e);
@@ -38,7 +38,7 @@ onBeforeMount(async () => {
   if (entries.value) {
     zoom.value = 12;
     await nextTick();
-    setMapCenter();
+    setMapCenter(entries.value[0].latitude, entries.value[0].longitude);
   }
 });
 </script>
@@ -48,10 +48,8 @@ onBeforeMount(async () => {
     v-if="center.length === 2"
     ref="mapComponent"
     :zoom="zoom"
-    :use-global-leaflet="true"
+    :use-global-leaflet="false"
     :center="center"
-    @update:center="updateCenter"
-    @update:zoom="updateZoom"
   >
     <LTileLayer
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

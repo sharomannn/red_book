@@ -32,7 +32,7 @@ export function updateRedBookEntrie(id: number, data: unknown) {
   });
 }
 
-export function getObservation(params: unknown) {
+export function getObservation(params?: unknown) {
   return makeRequest({
     url: `${baseURL}/observation/`,
     method: "GET",
